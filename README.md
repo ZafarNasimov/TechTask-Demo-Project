@@ -3,12 +3,11 @@ This repository contains an ASP.NET solution comprising an ASP.NET Web API proje
 
 Projects
 Web API Service (ASP.NET Core):
-
 Responsible for exposing RESTful API endpoints to manage data in the Product table.
 Implements CRUD operations (Create, Read, Update, Delete) for the Product entity.
 Utilizes ASP.NET Core and Entity Framework Core for handling HTTP requests and database interaction.
-MVC Web Application (ASP.NET Core):
 
+MVC Web Application (ASP.NET Core):
 Serves as the frontend for managing product data.
 Consumes RESTful API endpoints provided by the Web API Service to perform CRUD operations on the Product entity.
 Implements views and controllers to interact with the API endpoints and display product data to users.
