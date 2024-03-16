@@ -1,4 +1,3 @@
-ASP.NET Solution README
 This repository contains an ASP.NET solution comprising an ASP.NET Web API project and an ASP.NET MVC Web Application project. The solution is designed to manage product data through CRUD operations exposed via RESTful API endpoints and interact with the data through a web application frontend.
 
 Projects
