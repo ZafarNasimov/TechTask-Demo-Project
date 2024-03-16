@@ -1,0 +1,21 @@
+﻿@page
+@model ProductsWeb.Pages.ModelPages.CreateModel
+@{
+}
+<h1>Add Product</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="Name">
+    </div>
+    <div class="form-group">
+        <label for="description">Desciption:</label>
+        <textarea class="form-control" id="description" name="Description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary add-btn">Add</button>
+    <a href="/Index" class="btn btn-danger">Cancel</a>
+</form>
+
+
+

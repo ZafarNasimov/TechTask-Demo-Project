@@ -1,0 +1,47 @@
+# Visual Studio temporary files
+.vs/
+
+# Rider temporary files
+.idea/
+
+# Compiled source
+bin/
+obj/
+
+# NuGet packages
+*.nuget.props
+*.nuget.targets
+packages/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+*.dll
+*.exe
+*.pdb
+*.userprefs
+*.log
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+**/*.db-shm
+**/*.db-wal
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Visual Studio Code
+.vscode/
+
+# TestResults folder
+TestResults/
+
+# Other
+.DS_Store
+Thumbs.db

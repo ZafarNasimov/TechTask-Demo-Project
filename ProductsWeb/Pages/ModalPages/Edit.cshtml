@@ -1,0 +1,20 @@
+﻿@page
+@model ProductsWeb.Pages.ModelPages.EditModel
+@{
+}
+
+<h1>Edit Product</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="Name" value="@Model.product.Name">
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="Description">@Model.product.Description</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary add-btn">Save</button>
+    <a href="/Index" class="btn btn-danger">Cancel</a>
+</form>
+
