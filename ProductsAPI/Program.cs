@@ -1,23 +1,50 @@
+using ProductsAPI.Automapper;
 using ProductsAPI.Data;
+using ProductsAPI.Services;
 
-namespace ProductsAPI
+namespace ProductsAPI;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddControllers();
+        builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddScoped<DatabaseService>();
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+        builder.Services.AddCors(options =>
         {
-            var builder = WebApplication.CreateBuilder(args);
+            options.AddPolicy("AllowAllOrigins", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+        });
 
-            builder.Services.AddControllers();
-            builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ProductsAPI", Version = "v1" });
+        });
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            app.UseAuthorization();
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductsAPI v1");
+            options.RoutePrefix = "swagger";
+        });
 
-            app.MapControllers();
+        app.UseCors("AllowAllOrigins");
 
-            app.Run();
-        }
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
 }

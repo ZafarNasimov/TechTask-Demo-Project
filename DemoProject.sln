@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsAPI", "ProductsAPI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsWeb", "ProductsWeb\ProductsWeb.csproj", "{9C2B4F46-DF90-44CD-879C-6108F1501F57}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLib", "SharedLib\SharedLib.csproj", "{63E91479-6877-440B-9C7C-1CD85A0191DF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A9FD87D-8657-4043-94F9-59877B47A4CF}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -28,10 +26,6 @@ Global
 		{9C2B4F46-DF90-44CD-879C-6108F1501F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2B4F46-DF90-44CD-879C-6108F1501F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2B4F46-DF90-44CD-879C-6108F1501F57}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63E91479-6877-440B-9C7C-1CD85A0191DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63E91479-6877-440B-9C7C-1CD85A0191DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63E91479-6877-440B-9C7C-1CD85A0191DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63E91479-6877-440B-9C7C-1CD85A0191DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

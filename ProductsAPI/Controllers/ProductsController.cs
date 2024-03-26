@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProductsAPI.Data;
-using SharedLib;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProductsAPI.Services;
+using ProductsAPI.Models;
 
 namespace ProductsAPI.Controllers
 {
@@ -9,99 +9,79 @@ namespace ProductsAPI.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly AppDbContext _dbContext;
+        private readonly DatabaseService _databaseService;
+        private readonly IMapper _mapper;
 
-        public ProductsController(AppDbContext dbContext)
+        public ProductsController(DatabaseService databaseService, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _databaseService = databaseService;
+            _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        [HttpGet("")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            var products = await _dbContext.Product.ToListAsync();
-            return Ok(products);
+            var products = await _databaseService.GetProductsAsync();
+            var productDtos = _mapper.Map<List<ProductDto>>(products);
+            return Ok(productDtos);
         }
 
         [HttpGet("filter")]
-        [Route("api/products/filter")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(string filter)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsByFilter(string filter)
         {
-            IQueryable<Product> query = _dbContext.Product;
-
-            if (!string.IsNullOrEmpty(filter))
-            {
-                query = query.Where(p => p.Name.Contains(filter));
-            }
-
-            var products = await query.ToListAsync();
-            return Ok(products);
+            var products = await _databaseService.GetProductsByFilterAsync(filter);
+            var productDtos = _mapper.Map<List<ProductDto>>(products);
+            return Ok(productDtos);
         }
 
-        [HttpPost()]
-        public async Task<ActionResult<Product>> AddProduct(Product product)
+        [HttpPost("")]
+        public async Task<ActionResult<ProductDto>> AddProduct(ProductDto productDto)
         {
-            _dbContext.Product.Add(product);
-            await _dbContext.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+            var product = _mapper.Map<Product>(productDto);
+            var addedProduct = await _databaseService.AddProductAsync(product);
+            var addedProductDto = _mapper.Map<ProductDto>(addedProduct);
+            return CreatedAtAction(nameof(GetProductById), new { id = addedProductDto.Id }, addedProductDto);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateProduct(Product product)
+        [HttpPut("")]
+        public async Task<ActionResult> UpdateProduct(ProductDto productDto)
         {
-            try
+            var product = _mapper.Map<Product>(productDto);
+            var updated = await _databaseService.UpdateProductAsync(product);
+            if (updated)
             {
-                var _product = await _dbContext.Product.FirstOrDefaultAsync(p => p.Id == product.Id);
-                _product.Name= product.Name;
-                _product.Description = product.Description;
-                await _dbContext.SaveChangesAsync();
                 return Ok("Product Updated!");
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!ProductExists(product.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
-            var product = await _dbContext.Product.FindAsync(id);
-            if (product == null)
+            var deleted = await _databaseService.DeleteProductAsync(id);
+            if (deleted)
+            {
+                return NoContent();
+            }
+            else
             {
                 return NotFound();
             }
-
-            _dbContext.Product.Remove(product);
-            await _dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ProductExists(Guid id)
-        {
-            return _dbContext.Product.Any(e => e.Id == id);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(Guid id)
+        public async Task<ActionResult<ProductDto>> GetProductById(Guid id)
         {
-            var product = await _dbContext.Product.FindAsync(id);
-
+            var product = await _databaseService.GetProductByIdAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-
-            return Ok(product);
+            var productDto = _mapper.Map<ProductDto>(product);
+            return Ok(productDto);
         }
     }
 }

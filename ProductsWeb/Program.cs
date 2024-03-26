@@ -1,3 +1,5 @@
+using ProductsWeb.Middleware;
+
 namespace ProductsWeb
 {
     public class Program
@@ -7,6 +9,8 @@ namespace ProductsWeb
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddRazorPages();
+            builder.Services.AddSingleton<ProductsServiceMiddleware>();
+            builder.Services.AddSingleton<ProductsService>();
 
             var app = builder.Build();
 
@@ -15,6 +19,8 @@ namespace ProductsWeb
                 app.UseExceptionHandler("/Error");
             }
             app.UseStaticFiles();
+
+            app.UseProductsServiceMiddleware();
 
             app.UseRouting();
 

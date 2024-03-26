@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedLib;
+using ProductsAPI.Models;
 
 namespace ProductsAPI.Data
 {
